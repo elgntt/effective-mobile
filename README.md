@@ -65,7 +65,7 @@ curl --location --request DELETE 'localhost:8080/people' \
 ### Изменение сущности:
 
 - Метод: PUT
-- URL: /people/:id 
+- URL: /people
 - Пример запроса:
 
 ```
