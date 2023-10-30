@@ -15,13 +15,13 @@ func (h Handler) DeletePeople(c *gin.Context) {
 		PeopleId int `json:"peopleId"`
 	}{}
 
-	if request.PeopleId < 1 {
-		response.WriteErrorResponse(c, h.logger, app_err.NewBusinessError("Invalid people id"))
+	if err := c.BindJSON(&request); err != nil {
+		response.WriteErrorResponse(c, h.logger, err)
 		return
 	}
 
-	if err := c.BindJSON(&request); err != nil {
-		response.WriteErrorResponse(c, h.logger, err)
+	if request.PeopleId < 1 {
+		response.WriteErrorResponse(c, h.logger, app_err.NewBusinessError("Invalid people id"))
 		return
 	}
 

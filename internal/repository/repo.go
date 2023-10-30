@@ -51,9 +51,6 @@ func createFilterString(params model.Params) (string, []interface{}) {
 		parameterCount++
 	}
 
-	builder.WriteString(fmt.Sprintf(" LIMIT $%d OFFSET $%d", parameterCount, parameterCount+1))
-	queryParams = append(queryParams, params.Limit, params.Offset)
-
 	return builder.String(), queryParams
 }
 
@@ -84,6 +81,8 @@ func (r *Repo) GetPeople(ctx context.Context, params model.Params) ([]model.Peop
 	peopleQuery := `SELECT people_id, name, surname, patronymic, age, gender, country_id
 					FROM people
 					WHERE 1 = 1` + filterStr
+
+	peopleQuery += fmt.Sprintf(` LIMIT %d OFFSET %d`, params.Limit, params.Offset)
 
 	var people []model.People
 
