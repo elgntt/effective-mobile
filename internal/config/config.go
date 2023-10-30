@@ -9,6 +9,13 @@ import (
 type Config struct {
 	DBConfig     DBConfig
 	ServerConfig ServerConfig
+	APIConfig    APIConfig
+}
+
+type APIConfig struct {
+	GetAgeAPI     string `env:"GET_AGE_API"`
+	GetGenderAPI  string `env:"GET_GENDER_API"`
+	GetCountryAPI string `env:"GET_COUNTRY_API"`
 }
 
 type ServerConfig struct {

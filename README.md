@@ -22,6 +22,12 @@ PGSSLMODE=disable
 ENVIRONMENT=debug
 
 HTTP_PORT=8080
+
+#API
+GET_AGE_API=https://api.agify.io
+GET_COUNTRY_API=https://api.nationalize.io
+GET_GENDER_API=https://api.genderize.io
+
 ```
 
 ## Запуск 🛠️

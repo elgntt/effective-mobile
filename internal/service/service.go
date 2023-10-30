@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"github.com/elgntt/effective-mobile/internal/config"
 	"github.com/elgntt/effective-mobile/internal/model"
 	"github.com/elgntt/effective-mobile/internal/pkg/app_err"
 	"github.com/sirupsen/logrus"
@@ -23,12 +24,14 @@ type repository interface {
 
 type Service struct {
 	repository
+	apiCfg config.APIConfig
 	*logrus.Logger
 }
 
-func New(repo repository, log *logrus.Logger) *Service {
+func New(repo repository, apiCfg config.APIConfig, log *logrus.Logger) *Service {
 	return &Service{
 		repo,
+		apiCfg,
 		log,
 	}
 }
@@ -93,9 +96,9 @@ func (s *Service) UpdatePeople(ctx context.Context, data model.UpdatePeopleInfoR
 func (s *Service) supplementPeopleInfo(name string) (model.PeopleDataProbable, error) {
 	s.Logger.Debugln("Getting information via API for name:", name)
 	urls := []string{
-		fmt.Sprintf("https://api.agify.io/?name=%s", name),
-		fmt.Sprintf("https://api.genderize.io/?name=%s", name),
-		fmt.Sprintf("https://api.nationalize.io/?name=%s", name),
+		fmt.Sprintf("%s/?name=%s", s.apiCfg.GetAgeAPI, name),
+		fmt.Sprintf("%s/?name=%s", s.apiCfg.GetGenderAPI, name),
+		fmt.Sprintf("%s/?name=%s", s.apiCfg.GetCountryAPI, name),
 	}
 
 	netClient := http.Client{

@@ -33,10 +33,22 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+	defer func() {
+		err = db.Close()
+		if err != nil {
+			log.Error(err)
+		}
+	}()
+	log.Debugln("Up migrations...")
+	err = db2.Migrate(db, cfg.DBConfig)
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	r := api.New(
 		service.New(
 			repository.New(db),
+			cfg.APIConfig,
 			log,
 		),
 		log,

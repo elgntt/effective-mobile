@@ -6,7 +6,6 @@ import (
 	"github.com/elgntt/effective-mobile/internal/pkg/app_err"
 	response "github.com/elgntt/effective-mobile/internal/pkg/http"
 	"github.com/gin-gonic/gin"
-	"log"
 	"net/http"
 	"strconv"
 	"strings"
@@ -82,6 +81,6 @@ func parseParams(minAgeQuery, maxAgeQuery, gender, limit, offset, name string) (
 	if err != nil {
 		return model.Params{}, err
 	}
-	log.Println(params.Limit, params.Offset)
+
 	return params, nil
 }
